@@ -3,6 +3,8 @@
 Arduino/ESP32 Bar graph library uses custom charactors to draw a bar graph on
 LCD displays.
 
+![ESP 32 with LCD Display showing a bar graph](LcdGraph.png)
+
 ## How to use
 
 Copy [LcdGraph.cpp](LcdGraph.cpp) and [LcdGraph.h](LcdGraph.h) into your project.
