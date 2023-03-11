@@ -6,7 +6,7 @@
 #include "Arduino.h"
 
 
-void LcdGraph::init(uint8_t cols, uint8_t rows, uint8_t col, uint8_t row, uint8_t max)
+void LcdGraph::init(uint8_t cols, uint8_t rows, uint8_t col, uint8_t row, int max)
 {
   _cols = cols;
   _rows = rows;
@@ -159,8 +159,6 @@ void LcdGraph::drawGraph(LCD_CLASS* lcd, Style style)
   uint8_t max_buff_val = _rows*8-1;
   uint8_t div = _max / (max_buff_val);
   div = div == 0 ? 1 : div; // make sure div is not 0
-  uint8_t max_per_row = _max / _rows;
-  uint8_t buff_end = _buff_fill_size;
   uint8_t start_col = min(_buff_fill_size, _cols)-1;
 
   for(int8_t col=start_col; col>=0; col--)
@@ -168,29 +166,25 @@ void LcdGraph::drawGraph(LCD_CLASS* lcd, Style style)
     uint8_t buff_pos = LCD_GRAPH_BUFF_SIZE+_buff_pos+col-start_col;
     uint8_t buff_val = _buff[buff_pos%LCD_GRAPH_BUFF_SIZE] / div;
     buff_val = min((uint8_t)buff_val, max_buff_val);
+    Serial.println(buff_val);
 
     uint8_t val_full = style == Style::Line 
         || style == Style::LineDotted ? ' ' : 7;
 
     for(uint8_t row=0; row < _rows; row++)
     {
-      uint8_t val = _rows-1==row ? 0 : ' ';
-      uint8_t rem_rows = _rows-row-1;
-      int8_t rem_val = buff_val-rem_rows*8;
+      int8_t row_val = buff_val-row*7-row;
 
-      if(rem_val >= 0)
-      {
-        if(rem_val >= 7)
-        {
-          val = 7 == rem_val ? 7 : val_full ;
-        }
-        else
-        {
-          val = buff_val;
-        }
+      if(row_val < 0){
+        row_val = ' ';
+      } else if(row_val > 7) {
+        row_val = 7;
+      } else if(row_val == 7) {
+        row_val = val_full;
       }
-      lcd->setCursor(col+_col,_row+row);
-      lcd->write(val);
+
+      lcd->setCursor(_col+col,_rows-(_row+row+1));
+      lcd->write(row_val);
     }
   }
 }

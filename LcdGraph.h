@@ -26,7 +26,7 @@ public:
     LineDotted,
     NumStyles,
   };
-  void init(uint8_t cols, uint8_t rows, uint8_t col, uint8_t row, uint8_t max);
+  void init(uint8_t cols, uint8_t rows, uint8_t col, uint8_t row, int max);
   static void createChars(LCD_CLASS* lcd, Style style=Style::NORMAL);
   static void createChars(LCD_CLASS* lcd, uint8_t bar_pattern[8], uint8_t bar_top,  uint8_t bg_pattern[8]);
 
