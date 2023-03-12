@@ -6,6 +6,7 @@
 #define LCD_LINES   4
 
 int i = 0;
+int lastValue = 0;
 LcdGraph::Style graphStyle = LcdGraph::Style::NORMAL;
 
 LiquidCrystal_I2C lcd(I2C_ADDR, LCD_COLUMNS, LCD_LINES);
@@ -30,9 +31,21 @@ void setup() {
 
 void loop() {
   delay(100); // this speeds up the simulation
-  graph.addValue(i++);
+  ++i;
+
+  if(i%25==0){
+    graphStyle = (LcdGraph::Style)((graphStyle+1)
+        %LcdGraph::Style::NumStyles);
+    LcdGraph::createChars(&lcd, graphStyle);
+  }
+
+  int value = max(0, lastValue + int(random(0, 30)) - int(random(0, 30)) );
+  graph.addValue(value);
+
   graph.drawGraph(&lcd, graphStyle);
 
   lcd.setCursor(0,0);
-  lcd.print(i);
+  lcd.print(value);
+
+  lastValue = value;
 }
