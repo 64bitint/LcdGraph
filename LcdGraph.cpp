@@ -166,7 +166,6 @@ void LcdGraph::drawGraph(LCD_CLASS* lcd, Style style)
     uint8_t buff_pos = LCD_GRAPH_BUFF_SIZE+_buff_pos+col-start_col;
     uint8_t buff_val = _buff[buff_pos%LCD_GRAPH_BUFF_SIZE] / div;
     buff_val = min((uint8_t)buff_val, max_buff_val);
-    Serial.println(buff_val);
 
     uint8_t val_full = style == Style::Line 
         || style == Style::LineDotted ? ' ' : 7;
