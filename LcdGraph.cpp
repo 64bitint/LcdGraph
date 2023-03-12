@@ -1,4 +1,4 @@
-#include "LcdGraph.h"
+=#include "LcdGraph.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -157,8 +157,7 @@ void LcdGraph::addValue(int value)
 void LcdGraph::drawGraph(LCD_CLASS* lcd, Style style)
 {
   uint8_t max_buff_val = _rows*8-1;
-  uint8_t div = _max / (max_buff_val);
-  div = div == 0 ? 1 : div; // make sure div is not 0
+  uint8_t div = (_max-1) / (max_buff_val) + 1;
   uint8_t start_col = min(_buff_fill_size, _cols)-1;
 
   for(int8_t col=start_col; col>=0; col--)
@@ -177,8 +176,6 @@ void LcdGraph::drawGraph(LCD_CLASS* lcd, Style style)
       if(row_val < 0){
         row_val = ' ';
       } else if(row_val > 7) {
-        row_val = 7;
-      } else if(row_val == 7) {
         row_val = val_full;
       }
 
