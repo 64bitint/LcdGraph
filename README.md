@@ -1,21 +1,37 @@
 # LcdGraph
 
-Arduino/ESP32 Bar graph library uses custom charactors to draw a bar graph on
+Arduino/ESP32 Bar graph library uses custom charactors to draw bar graphs on
 LCD displays.
 
 ![ESP 32 with LCD Display showing a bar graph](LcdGraph.png)
 
 ## How to use
 
+### Setup
+
 Copy [LcdGraph.cpp](LcdGraph.cpp) and [LcdGraph.h](LcdGraph.h) into your project.
-
-Call ```addValue()``` to update the graph's values
-
-Call ```drawGraph()``` to update the LCD display with the update graph
 
 To use non a I2C LCD remove
 ```#define USE_I2C```
 from the [LcdGraph.h](LcdGraph.h) header file.
+
+Include the header file
+```cpp
+#include "LcdGraph.h"
+```
+### Init
+
+Create an instance of LcdGraph
+
+Call ```init()``` to set number of columns and rows as well as the start column and row.
+
+Call ```createChars()``` to set the LCD display's custom charactors
+
+### Output
+
+Call ```addValue()``` to add a value to the graph
+
+Call ```drawGraph()``` to update the LCD display with the updated graph values
 
 ## Example
 
